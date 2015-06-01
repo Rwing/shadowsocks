@@ -24,7 +24,7 @@ import logging
 import signal
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../'))
-from shadowsocks import shell, daemon, eventloop, tcprelay, udprelay, asyncdns
+from shadowsocks import shell, daemon, eventloop, tcprelay, udprelay, asyncdns, httpapi
 
 
 def main():
@@ -78,6 +78,8 @@ def main():
             list(map(lambda s: s.add_to_loop(loop), tcp_servers + udp_servers))
 
             daemon.set_user(config.get('user', None))
+            httpApiThread = httpapi.HttpApiThread(loop)
+            httpApiThread.start()
             loop.run()
         except Exception as e:
             shell.print_exception(e)
