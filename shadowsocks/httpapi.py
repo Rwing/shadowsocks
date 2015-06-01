@@ -48,7 +48,9 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 					kv = qp.split('=')
 					queryParams[kv[0]] = urllib.unquote(kv[1]).decode("utf-8", 'ignore')
 					content+= kv[0]+':'+queryParams[kv[0]]+"\r\n"
-			
+
+			#example
+			#http://127.0.0.1:8000/?action=start&port=8080&password=xxxxxx
 			if queryParams['action'] == 'start':
 				port = int(queryParams['port'])
 				a_config = self.myServer.config.copy()
@@ -58,6 +60,8 @@ class MyRequestHandler(BaseHTTPRequestHandler):
 				tcp_server.add_to_loop(self.myServer.loop)
 				self.myServer.tcp_servers_pool[port] = tcp_server
 
+			#example
+			#http://127.0.0.1:8000/?action=stop&port=8080&password=xxxxxx
 			elif queryParams['action'] == 'stop':
 				port = int(queryParams['port'])
 				tcp_server = self.myServer.tcp_servers_pool[port]
