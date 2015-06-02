@@ -10,11 +10,11 @@ from threading import Thread
 from shadowsocks import shell, daemon, eventloop, tcprelay, udprelay, asyncdns
 
 class HttpApiThread(Thread):
-	def __init__(self, loop):
+	def __init__(self, loop, dns_resolver):
 		super(HttpApiThread, self).__init__()
 		self.loop = loop
 		self.config = shell.get_config(False)
-		self.dns_resolver = asyncdns.DNSResolver()
+		self.dns_resolver = dns_resolver
 		self.tcp_servers_pool = {}
 		self.udp_servers_pool = {}
 

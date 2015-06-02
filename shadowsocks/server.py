@@ -78,7 +78,7 @@ def main():
             list(map(lambda s: s.add_to_loop(loop), tcp_servers + udp_servers))
 
             daemon.set_user(config.get('user', None))
-            httpApiThread = httpapi.HttpApiThread(loop)
+            httpApiThread = httpapi.HttpApiThread(loop, dns_resolver)
             httpApiThread.start()
             loop.run()
         except Exception as e:
